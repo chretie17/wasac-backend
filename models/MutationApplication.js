@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    nationalId: {
+      type: DataTypes.STRING,  
+      allowNull: false,         
+    },
     meterNumber: {
       type: DataTypes.STRING,  // Add this field
       allowNull: false,

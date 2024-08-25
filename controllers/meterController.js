@@ -34,29 +34,22 @@ exports.updateMeter = async (req, res) => {
   const { meterNumber, ownerName, latitude, longitude, nationalId } = req.body;
 
   try {
-    // Find the meter by id and ensure it belongs to the current user's nationalId
-    const meter = await Meter.findOne({
-      where: { id, nationalId: req.user.nationalId }
-    });
+    const meter = await Meter.findOne({ where: { id } });
 
     if (!meter) {
       return res.status(404).json({ error: 'Meter not found' });
     }
 
-    // Update the meter's details, including the nationalId if provided
     meter.meterNumber = meterNumber || meter.meterNumber;
     meter.ownerName = ownerName || meter.ownerName;
     meter.latitude = latitude || meter.latitude;
     meter.longitude = longitude || meter.longitude;
-    meter.nationalId = nationalId || meter.nationalId;  // Update nationalId if provided
+    meter.nationalId = nationalId || meter.nationalId;
 
-    // Save the updated meter
     await meter.save();
 
-    // Respond with the updated meter data
     res.json(meter);
   } catch (error) {
-    // Handle any errors that occur during the update process
     res.status(400).json({ error: error.message });
   }
 };
